@@ -1,7 +1,3 @@
-
-
-https://github.com/user-attachments/assets/a529480f-919c-48fd-b431-63cabe3429e9
-
 # WB Media Downloader
 
 Скачивание фотографий (одним zip-архивом) и видео (в MP4) из карточки товара Wildberries по артикулу или ссылке.
@@ -12,7 +8,7 @@ https://github.com/user-attachments/assets/a529480f-919c-48fd-b431-63cabe3429e9
 
 ## Демо
 
-▶️ **[Смотреть демо (wild-search.mp4, 42 с)](wild-search.mp4)**
+https://github.com/user-attachments/assets/a529480f-919c-48fd-b431-63cabe3429e9
 
 Открытие товара → выбор фото → товар без видео → скачанный архив с фотографиями.
 
