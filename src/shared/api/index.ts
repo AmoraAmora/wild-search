@@ -7,3 +7,4 @@ export {
   isHttpError,
   type RequestOptions,
 } from './http';
+export * from './wb-cdn';
