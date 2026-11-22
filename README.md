@@ -8,7 +8,7 @@
 
 ## Демо
 
-https://github.com/user-attachments/assets/a529480f-919c-48fd-b431-63cabe3429e9
+https://github.com/user-attachments/assets/d154cad0-b872-4f4a-a60e-b82c69f901bb
 
 Открытие товара → выбор фото → товар без видео → скачанный архив с фотографиями.
 
