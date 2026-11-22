@@ -12,7 +12,8 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    // Pure logic runs in Node; files that need a DOM opt in with `@vitest-environment happy-dom`.
+    include: ['src/**/*.test.{ts,tsx}'],
     passWithNoTests: true,
   },
 });
