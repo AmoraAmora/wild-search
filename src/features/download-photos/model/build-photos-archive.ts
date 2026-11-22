@@ -1,4 +1,4 @@
-import { zipSync, type Zippable } from 'fflate';
+import type { Zippable } from 'fflate';
 
 import type { ProductPhoto } from '@/entities/product';
 import { fetchBytes } from '@/shared/api';
@@ -33,6 +33,10 @@ export async function buildPhotosArchive(
       onProgress: (completed, total) => onProgress(completed / total),
     },
   );
+
+  // Loaded on first use: zipping is only needed at the very end of a download.
+  const { zipSync } = await import('fflate');
+  signal.throwIfAborted();
 
   // WebP is already compressed: storing (level 0) keeps the archive the same size
   // and makes zipping a plain memory copy, cheap enough for the main thread.
