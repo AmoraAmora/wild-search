@@ -1,4 +1,6 @@
-export class ProductNotFoundError extends Error {
+import { ExpectedError } from '@/shared/lib';
+
+export class ProductNotFoundError extends ExpectedError {
   readonly nmId: number;
 
   constructor(nmId: number, options?: ErrorOptions) {

@@ -1,11 +1,8 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { cdnRoutesQueryOptions } from '@/shared/api';
+import { cdnRoutesQueryOptions, shouldRetryRequest } from '@/shared/api';
 
-import { ProductNotFoundError } from '../model/errors';
 import { fetchProductMedia } from './product-card';
-
-const MAX_RETRIES = 2;
 
 export const productQueryKeys = {
   all: ['product'] as const,
@@ -20,7 +17,7 @@ export const productMediaQueryOptions = (nmId: number) =>
       const routes = await client.ensureQueryData(cdnRoutesQueryOptions());
       return fetchProductMedia(nmId, routes, { signal });
     },
-    // A missing product will not appear on retry; network hiccups might.
-    retry: (failureCount, error) =>
-      !(error instanceof ProductNotFoundError) && failureCount < MAX_RETRIES,
+    // Explicit, so the policy holds with any QueryClient: network hiccups and 5xx are
+    // retried, while ProductNotFoundError or a changed response format are not.
+    retry: shouldRetryRequest,
   });
