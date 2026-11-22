@@ -5,11 +5,36 @@ import type { ReactNode } from 'react';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#9b3fe8',
+      main: '#8a3ffc',
+    },
+    background: {
+      default: '#f6f4fb',
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 10,
+  },
+  typography: {
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    button: {
+      textTransform: 'none',
+      fontWeight: 600,
+    },
+  },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: ({ theme: { breakpoints } }) => ({
+          [breakpoints.up('sm')]: { borderRadius: 16 },
+        }),
+      },
+    },
   },
 });
 
