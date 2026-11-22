@@ -8,6 +8,7 @@ import { getErrorMessage, useFileDownload } from '@/shared/lib';
 import { ErrorSnackbar } from '@/shared/ui';
 
 import { videoSourceQueryOptions } from '../api/video-source-query';
+import { formatDuration } from '../lib/format-duration';
 import { buildVideoFile } from '../model/build-video-file';
 import { UnsupportedVideoError } from '../model/errors';
 
@@ -40,7 +41,7 @@ export function DownloadVideoButton({ nmId, videoBaseUrl }: DownloadVideoButtonP
   const label = isPending
     ? `Обработка… ${percent}%`
     : source
-      ? `Скачать видео (${source.quality})`
+      ? `Скачать видео (${source.quality} · ${formatDuration(source.durationSec)})`
       : 'Скачать видео';
 
   return (
