@@ -11,8 +11,10 @@ export default defineConfig([
     },
   },
   {
-    // TODO(self-review): re-enable once features and widgets consume the entities.
-    // While the app is built bottom-up, freshly added slices have no consumers yet.
+    // The app has a single page, so every slice inevitably has exactly one consumer and
+    // this rule would collapse everything into `pages/home`. The download features are
+    // kept as independent slices on purpose: they don't depend on the modal and can be
+    // reused as is (e.g. on a product page).
     rules: {
       'fsd/insignificant-slice': 'off',
     },
