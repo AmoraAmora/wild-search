@@ -5,6 +5,7 @@ export {
   HttpError,
   isAbortError,
   isHttpError,
+  NetworkError,
   type RequestOptions,
 } from './http';
 export * from './wb-cdn';

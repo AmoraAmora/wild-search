@@ -1,6 +1,14 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { fetchBytes, fetchJson, fetchText, HttpError, isAbortError, isHttpError } from './http';
+import {
+  fetchBytes,
+  fetchJson,
+  fetchText,
+  HttpError,
+  isAbortError,
+  isHttpError,
+  NetworkError,
+} from './http';
 
 const URL_UNDER_TEST = 'https://example.test/resource';
 
@@ -52,6 +60,23 @@ describe('http', () => {
     await fetchText(URL_UNDER_TEST, { signal: controller.signal });
 
     expect(fetchMock).toHaveBeenCalledWith(URL_UNDER_TEST, { signal: controller.signal });
+  });
+
+  it('wraps network failures into NetworkError, keeping the cause', async () => {
+    const cause = new TypeError('Failed to fetch');
+    vi.stubGlobal('fetch', vi.fn<typeof fetch>().mockRejectedValue(cause));
+
+    const error: unknown = await fetchJson(URL_UNDER_TEST).catch((reason: unknown) => reason);
+
+    expect(error).toBeInstanceOf(NetworkError);
+    expect(error).toMatchObject({ url: URL_UNDER_TEST, cause });
+  });
+
+  it('passes abort errors through untouched', async () => {
+    const abort = new DOMException('Aborted', 'AbortError');
+    vi.stubGlobal('fetch', vi.fn<typeof fetch>().mockRejectedValue(abort));
+
+    await expect(fetchJson(URL_UNDER_TEST)).rejects.toBe(abort);
   });
 
   it('isAbortError recognises abort errors only', () => {

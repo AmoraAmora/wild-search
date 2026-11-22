@@ -14,6 +14,20 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * The request never got a response: offline, DNS failure, CORS,
+ * or a VPN / blocker dropping the connection.
+ */
+export class NetworkError extends Error {
+  readonly url: string;
+
+  constructor(url: string, options?: ErrorOptions) {
+    super(`Request to ${url} failed: no response`, options);
+    this.name = 'NetworkError';
+    this.url = url;
+  }
+}
+
 export function isHttpError(error: unknown, status?: number): error is HttpError {
   return error instanceof HttpError && (status === undefined || error.status === status);
 }
@@ -23,7 +37,14 @@ export function isAbortError(error: unknown): boolean {
 }
 
 async function request(url: string, { signal }: RequestOptions = {}): Promise<Response> {
-  const response = await fetch(url, signal ? { signal } : undefined);
+  let response: Response;
+
+  try {
+    response = await fetch(url, signal ? { signal } : undefined);
+  } catch (error) {
+    // fetch rejects with a vague TypeError ("Failed to fetch" / "Load failed") on network failures.
+    throw isAbortError(error) ? error : new NetworkError(url, { cause: error });
+  }
 
   if (!response.ok) {
     throw new HttpError(response.status, url);
