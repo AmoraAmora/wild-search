@@ -23,13 +23,16 @@ export const SelectablePhoto = memo(function SelectablePhoto({
         position: 'relative',
         display: 'block',
         aspectRatio: '3 / 4',
-        borderRadius: 1,
+        borderRadius: 1.5,
         overflow: 'hidden',
         cursor: 'pointer',
         outline: 2,
         outlineColor: selected ? 'primary.main' : 'transparent',
         outlineOffset: -2,
         bgcolor: 'action.hover',
+        transition: 'outline-color 120ms',
+        '& img': { transition: 'opacity 120ms, transform 200ms' },
+        '&:hover img': { transform: 'scale(1.03)' },
       }}
     >
       <Box

@@ -1,11 +1,12 @@
 import CloseIcon from '@mui/icons-material/Close';
-import PhotoLibraryOutlinedIcon from '@mui/icons-material/PhotoLibraryOutlined';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useQuery } from '@tanstack/react-query';
 
 import { productMediaQueryOptions, ProductNotFoundError } from '@/entities/product';
@@ -23,20 +24,28 @@ type MediaDownloadModalProps = {
 const TITLE_ID = 'media-download-modal-title';
 
 export function MediaDownloadModal({ nmId, open, onClose }: MediaDownloadModalProps) {
+  const isPhone = useMediaQuery(useTheme().breakpoints.down('sm'));
+
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth aria-labelledby={TITLE_ID}>
-      <DialogTitle id={TITLE_ID} sx={{ display: 'flex', alignItems: 'center', gap: 1, pr: 6 }}>
-        <PhotoLibraryOutlinedIcon color="primary" />
-        Скачать фотографии
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="md"
+      fullWidth
+      fullScreen={isPhone}
+      aria-labelledby={TITLE_ID}
+    >
+      <DialogTitle id={TITLE_ID} sx={{ pr: 7, fontWeight: 700 }}>
+        Скачать фото и видео
       </DialogTitle>
       <IconButton
         aria-label="Закрыть"
         onClick={onClose}
-        sx={{ position: 'absolute', right: 8, top: 8 }}
+        sx={{ position: 'absolute', right: 12, top: 12 }}
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent>
+      <DialogContent sx={{ pt: 0 }}>
         {/* Dialog unmounts its content when closed: running downloads are cancelled. */}
         <ProductMediaContent nmId={nmId} />
       </DialogContent>

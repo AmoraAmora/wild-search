@@ -16,6 +16,7 @@ type DownloadVideoButtonProps = {
   nmId: number;
   /** From the product card; `null` when the product has no video. */
   videoBaseUrl: string | null;
+  fullWidth?: boolean;
 };
 
 function describeError(error: unknown): string {
@@ -24,7 +25,11 @@ function describeError(error: unknown): string {
     : getErrorMessage(error);
 }
 
-export function DownloadVideoButton({ nmId, videoBaseUrl }: DownloadVideoButtonProps) {
+export function DownloadVideoButton({
+  nmId,
+  videoBaseUrl,
+  fullWidth = false,
+}: DownloadVideoButtonProps) {
   const sourceQuery = useQuery(videoSourceQueryOptions(videoBaseUrl));
   const { download, isPending, percent, error, resetError } = useFileDownload(buildVideoFile);
 
@@ -48,9 +53,10 @@ export function DownloadVideoButton({ nmId, videoBaseUrl }: DownloadVideoButtonP
     <>
       <Tooltip title={unavailableReason ?? ''}>
         {/* Disabled buttons swallow pointer events; the span keeps the tooltip working. */}
-        <span>
+        <span style={fullWidth ? { display: 'block' } : undefined}>
           <Button
             variant="outlined"
+            fullWidth={fullWidth}
             startIcon={isResolving ? <CircularProgress size={18} /> : <MovieIcon />}
             disabled={source === null || isPending}
             onClick={() => source && download({ nmId, source })}

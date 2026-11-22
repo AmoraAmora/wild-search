@@ -10,15 +10,21 @@ import { buildPhotosArchive } from '../model/build-photos-archive';
 type DownloadPhotosButtonProps = {
   nmId: number;
   photos: readonly ProductPhoto[];
+  fullWidth?: boolean;
 };
 
-export function DownloadPhotosButton({ nmId, photos }: DownloadPhotosButtonProps) {
+export function DownloadPhotosButton({
+  nmId,
+  photos,
+  fullWidth = false,
+}: DownloadPhotosButtonProps) {
   const { download, isPending, percent, error, resetError } = useFileDownload(buildPhotosArchive);
 
   return (
     <>
       <Button
-        variant="outlined"
+        variant="contained"
+        fullWidth={fullWidth}
         startIcon={<DownloadIcon />}
         disabled={isPending || photos.length === 0}
         onClick={() => download({ nmId, photos })}

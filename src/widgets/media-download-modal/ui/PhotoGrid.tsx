@@ -6,13 +6,13 @@ type PhotoGridProps = {
   children: ReactNode;
 };
 
-/** Responsive grid: as many 3:4 tiles per row as fit, at least 120px wide. */
+/** Responsive grid of 3:4 tiles: 3 per row on phones, as many ≥120px tiles as fit otherwise. */
 export function PhotoGrid({ children }: PhotoGridProps) {
   return (
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
+        gridTemplateColumns: { xs: 'repeat(3, 1fr)', sm: 'repeat(auto-fill, minmax(120px, 1fr))' },
         gap: 1,
       }}
     >
