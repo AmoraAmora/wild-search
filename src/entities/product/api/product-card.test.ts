@@ -20,6 +20,7 @@ const CARD_JSON = {
   nm_id: NM_ID,
   imt_name: 'Джинсы бананы широкие',
   subj_name: 'Джинсы',
+  selling: { brand_name: 'OBO', supplier_id: 3949296 },
   media: { has_video: true, photo_count: 3, best_qualities_photos: [1, 3] },
 };
 
@@ -75,14 +76,23 @@ describe('toProductMedia', () => {
     ]);
   });
 
-  it('falls back to a generic name when the card has none', () => {
+  it('falls back to a generic name and no brand when the card has none', () => {
     const media = toProductMedia(NM_ID, productCardSchema.parse({}), {
       mediaBaseUrl: MEDIA_BASE,
       videoBaseUrl: null,
     });
 
     expect(media.name).toBe(`Товар ${NM_ID}`);
+    expect(media.brand).toBeNull();
     expect(media.photos).toEqual([]);
+  });
+
+  it('takes the brand from selling.brand_name, treating a blank one as missing', () => {
+    const urls = { mediaBaseUrl: MEDIA_BASE, videoBaseUrl: null };
+    const withBlankBrand = productCardSchema.parse({ selling: { brand_name: '  ' } });
+
+    expect(toProductMedia(NM_ID, card, urls).brand).toBe('OBO');
+    expect(toProductMedia(NM_ID, withBlankBrand, urls).brand).toBeNull();
   });
 });
 

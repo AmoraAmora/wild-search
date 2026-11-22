@@ -10,6 +10,7 @@ export type ProductPhoto = {
 export type ProductMedia = {
   nmId: number;
   name: string;
+  brand: string | null;
   photos: ProductPhoto[];
   /** Base URL for the product's HLS renditions; `null` when the product has no video. */
   videoBaseUrl: string | null;

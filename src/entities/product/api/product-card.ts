@@ -21,6 +21,7 @@ const EMPTY_MEDIA = { photo_count: 0, has_video: false, best_qualities_photos: [
 /** `card.json` from the basket CDN — only the fields the app uses. */
 export const productCardSchema = z.object({
   imt_name: z.optional(z.string()),
+  selling: z.optional(z.object({ brand_name: z.optional(z.string()) })),
   media: z._default(
     z.object({
       photo_count: z._default(z.int().check(z.nonnegative()), 0),
@@ -61,6 +62,7 @@ export function toProductMedia(
   return {
     nmId,
     name: card.imt_name ?? `Товар ${nmId}`,
+    brand: card.selling?.brand_name?.trim() || null,
     photos,
     videoBaseUrl,
   };
