@@ -14,7 +14,8 @@
     "typescript/no-non-null-assertion": "error",
     "typescript/consistent-type-imports": "error",
     "import/no-cycle": "error",
-    "no-console": ["warn", { "allow": ["warn", "error"] }]
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-underscore-dangle": ["warn", { "allow": ["_default"] }]
   },
   "ignorePatterns": ["dist", "node_modules"]
 }

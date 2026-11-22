@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import * as z from 'zod/mini';
 
 import {
   CdnHostNotFoundError,
@@ -20,15 +20,16 @@ const EMPTY_MEDIA = { photo_count: 0, has_video: false, best_qualities_photos: [
 
 /** `card.json` from the basket CDN — only the fields the app uses. */
 export const productCardSchema = z.object({
-  imt_name: z.string().optional(),
-  media: z
-    .object({
-      photo_count: z.number().int().nonnegative().default(0),
-      has_video: z.boolean().default(false),
+  imt_name: z.optional(z.string()),
+  media: z._default(
+    z.object({
+      photo_count: z._default(z.int().check(z.nonnegative()), 0),
+      has_video: z._default(z.boolean(), false),
       /** Photos that also exist in `hq` size; absent when none do. */
-      best_qualities_photos: z.array(z.number().int().positive()).default([]),
-    })
-    .default(EMPTY_MEDIA),
+      best_qualities_photos: z._default(z.array(z.int().check(z.positive())), []),
+    }),
+    EMPTY_MEDIA,
+  ),
 });
 
 export type ProductCardDto = z.infer<typeof productCardSchema>;

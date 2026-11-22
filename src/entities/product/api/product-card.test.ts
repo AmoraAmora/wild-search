@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { ZodError } from 'zod';
+import * as z from 'zod/mini';
 
 import type { CdnRoutes } from '@/shared/api';
 
@@ -48,8 +48,10 @@ describe('productCardSchema', () => {
   });
 
   it('rejects malformed media fields', () => {
-    expect(() => productCardSchema.parse({ media: { photo_count: '3' } })).toThrow(ZodError);
-    expect(() => productCardSchema.parse({ media: { photo_count: -1 } })).toThrow(ZodError);
+    expect(() => productCardSchema.parse({ media: { photo_count: '3' } })).toThrow(
+      z.core.$ZodError,
+    );
+    expect(() => productCardSchema.parse({ media: { photo_count: -1 } })).toThrow(z.core.$ZodError);
   });
 });
 

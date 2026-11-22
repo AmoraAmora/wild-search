@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ZodError } from 'zod';
+import * as z from 'zod/mini';
 
 import { upstreamsResponseSchema } from './upstreams';
 
@@ -48,11 +48,11 @@ describe('upstreamsResponseSchema', () => {
       },
     };
 
-    expect(() => upstreamsResponseSchema.parse(changed)).toThrow(ZodError);
+    expect(() => upstreamsResponseSchema.parse(changed)).toThrow(z.core.$ZodError);
   });
 
   it('rejects a response without the required route maps', () => {
-    expect(() => upstreamsResponseSchema.parse({ origin: {} })).toThrow(ZodError);
-    expect(() => upstreamsResponseSchema.parse(null)).toThrow(ZodError);
+    expect(() => upstreamsResponseSchema.parse({ origin: {} })).toThrow(z.core.$ZodError);
+    expect(() => upstreamsResponseSchema.parse(null)).toThrow(z.core.$ZodError);
   });
 });
