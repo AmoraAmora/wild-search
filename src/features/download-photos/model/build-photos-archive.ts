@@ -5,7 +5,7 @@ import { fetchBytes } from '@/shared/api';
 import { MEDIA_DOWNLOAD_CONCURRENCY } from '@/shared/config';
 import { mapWithConcurrency, type DownloadResult, type DownloadTaskContext } from '@/shared/lib';
 
-export type PhotosArchiveRequest = {
+type PhotosArchiveRequest = {
   nmId: number;
   photos: readonly ProductPhoto[];
 };

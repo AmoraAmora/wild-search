@@ -4,7 +4,7 @@ import { cdnRoutesQueryOptions, shouldRetryRequest } from '@/shared/api';
 
 import { fetchProductMedia } from './product-card';
 
-export const productQueryKeys = {
+const productQueryKeys = {
   all: ['product'] as const,
   media: (nmId: number) => [...productQueryKeys.all, nmId, 'media'] as const,
 };

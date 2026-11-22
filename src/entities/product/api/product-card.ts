@@ -32,7 +32,7 @@ export const productCardSchema = z.object({
   ),
 });
 
-export type ProductCardDto = z.infer<typeof productCardSchema>;
+type ProductCardDto = z.infer<typeof productCardSchema>;
 
 type MediaBaseUrls = {
   mediaBaseUrl: string;

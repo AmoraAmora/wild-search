@@ -8,5 +8,5 @@ export {
   NetworkError,
   type RequestOptions,
 } from './http';
-export { isTransientError, shouldRetryRequest } from './retry-policy';
+export { shouldRetryRequest } from './retry-policy';
 export * from './wb-cdn';

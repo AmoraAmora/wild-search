@@ -3,15 +3,13 @@ export {
   ImageSize,
   VIDEO_QUALITIES,
   type CdnRoutes,
-  type HostRange,
   type VideoQuality,
 } from './model';
-export { cdnRoutesQueryOptions, fetchCdnRoutes } from './upstreams';
+export { cdnRoutesQueryOptions } from './upstreams';
 export {
   productCardInfoUrl,
   productImageUrl,
   productMediaBaseUrl,
   productVideoBaseUrl,
   productVideoPlaylistUrl,
-  resolveHost,
 } from './urls';

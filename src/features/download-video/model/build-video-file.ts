@@ -10,7 +10,7 @@ import {
 import type { VideoSource } from '../api/video-source-query';
 import { remuxTsToMp4 } from '../lib/remux-to-mp4';
 
-export type VideoFileRequest = {
+type VideoFileRequest = {
   nmId: number;
   source: VideoSource;
 };
