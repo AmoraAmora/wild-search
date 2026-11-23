@@ -70,8 +70,10 @@ export function toProductMedia(
 
 /**
  * Loads the product card from the basket CDN. Used instead of
- * `wildberries.ru/__internal/card/cards/v4/detail`, which sits behind WB's anti-bot
- * protection (403 without browser cookies) — the CDN is public and CORS-enabled.
+ * `wildberries.ru/__internal/card/cards/v4/detail`: it returns 403 without WB's anti-bot
+ * cookie (`x_wbaas_token`), and its CORS policy has no `Access-Control-Allow-Credentials`,
+ * so the browser blocks credentialed responses on any other origin. The CDN is public and
+ * allows any origin.
  */
 export async function fetchProductMedia(
   nmId: number,
